@@ -1,33 +1,21 @@
-# Pronalazi korjen skupa 
 def find(parent, i):
     if parent[i] == i:
         return i
     return find(parent, parent[i])
 
-# Spaja dva skupa
-def union(parent, rank, x, y):
-    xroot = find(parent, x)
-    yroot = find(parent, y)
-
-    if rank[xroot] < rank[yroot]:
-        parent[xroot] = yroot
-    elif rank[xroot] > rank[yroot]:
-        parent[yroot] = xroot
-    else:
-        parent[yroot] = xroot
-        rank[xroot] += 1
+def union(parent, x, y):
+    parent[find(parent,y)] = find(parent,x)
 
 def kruskal(n, edges):
     result = []  
     i, e = 0, 0  
-    parent, rank = [], []
+    parent = []
 
     sorted_edges = sorted(edges.items(), key=lambda item: item[1])
 
     # Stvaranje V skupova (jedan za svaki čvor)
     for node in range(n):
         parent.append(node)
-        rank.append(0)
 
     # Broj bridova u MST-u će biti jednak V-1
     while e < n - 1:
@@ -40,7 +28,7 @@ def kruskal(n, edges):
         if x != y:
             e += 1
             result.append(((u, v), weight))
-            union(parent, rank, x, y)
+            union(parent, x, y)
 
     # Ispis rezultata
     for (u, v), weight in result:
