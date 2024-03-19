@@ -36,4 +36,4 @@ edges = {
 
 nodes = [0,1,2,3,4,5]
 
-print(dijkstra(nodes, edges, 0))
+print(*dijkstra(nodes, edges, 0).values())

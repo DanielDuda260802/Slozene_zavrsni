@@ -33,5 +33,4 @@ edges = {
     (5,4):2.5
     }
 
-shortest_path_lenghts = FloydWarshall(nodes,edges)
-print(shortest_path_lenghts)
+print(*FloydWarshall(nodes,edges).values())

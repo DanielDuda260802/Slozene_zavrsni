@@ -5,5 +5,5 @@ def bfs(graph, start):
         if vertex not in visited:
             visited.add(vertex)
             queue.extend([i for i in graph[vertex] if i not in visited])
-    
+
     return visited

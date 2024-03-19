@@ -4,20 +4,11 @@ def find(parent,i):
     else:
         return find(parent, parent[i])
     
-def union(parent, rank, x,y):
-    xroot = find(parent, x)
-    yroot = find(parent, y)
-    if rank[yroot] < rank[xroot]:
-        parent[yroot] = xroot
-    elif rank[xroot] < rank[yroot]:
-        parent[xroot] = yroot
-    else:
-        parent[yroot] = xroot
-        rank[xroot] += 1
+def union(parent, x,y):
+    parent[find(parent,y)] = find(parent,x)
 
 def minimum_component(broj_gradova,ceste):
     parent = [i for i in range(broj_gradova)]
-    rank = [0 for _ in range(broj_gradova)]
     nove_ceste = []
     components = broj_gradova
 
@@ -25,7 +16,7 @@ def minimum_component(broj_gradova,ceste):
         xroot = find(parent, x-1)
         yroot = find(parent, y-1)
         if xroot != yroot:
-            union(parent, rank, x-1, y-1)
+            union(parent, xroot, yroot)
             components -= 1
 
     representer = {find(parent, i): i for i in range(n)}
@@ -35,7 +26,7 @@ def minimum_component(broj_gradova,ceste):
         nove_ceste.append((representer[rep_list[i - 1]] + 1, representer[rep_list[i]] + 1))
 
     print(components - 1)
-    print(nove_ceste)
+    print(*nove_ceste)
 
 n,m = list(map(int, input().split()))
 gradovi = []
